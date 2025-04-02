@@ -16,6 +16,21 @@ class PostRepository extends ServiceEntityRepository
         parent::__construct($registry, Post::class);
     }
 
+// Metodo personalizado para buscar un post por su id
+
+public function findPost($id): ?Post
+{
+    return $this->getEntityManager()
+        ->createQuery('
+            SELECT p
+            FROM App\Entity\Post p
+            WHERE p.id = :id
+        ')
+        ->setParameter('id', $id)
+        ->getOneOrNullResult();
+}
+
+
 //    /**
 //     * @return Post[] Returns an array of Post objects
 //     */

@@ -20,7 +20,8 @@ final class PostController extends AbstractController {
     public function index($id): Response
     {
 
-        $posts = $this->em->getRepository(Post::class)->findBy(['id' => 1, 'titulo' => 'Mi primer post de prueba']);
+        $posts = $this->em->getRepository(Post::class)->find($id);
+        $custom_post = $this->em->getRepository(Post::class)->findPost($id); //Metedo persanilazo creado en PostRepository
 
         if (!$posts) {
             throw $this->createNotFoundException("Post no encontrado");
@@ -28,6 +29,7 @@ final class PostController extends AbstractController {
 
         return $this->render('post/index.html.twig', [
             'posts' => $posts,
+            'custom_post' => $custom_post
         ]);
     }
 }
